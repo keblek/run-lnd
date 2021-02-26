@@ -170,8 +170,8 @@ git clone -b v0.21.0 https://github.com/bitcoin/bitcoin.git
 cd bitcoin/
 ./autogen.sh 
 ./configure CXXFLAGS="--param ggc-min-expand=1 --param ggc-min-heapsize=32768" --enable-cxx --with-zmq --without-gui --disable-shared --with-pic --disable-tests --disable-bench --enable-upnp-default --disable-wallet
-# This may take a while
-make
+# This step takes me 2.5 hours to complete on the rock64
+make -j "$(($(nproc)+1))"
 sudo make install
 ```
 
