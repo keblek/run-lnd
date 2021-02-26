@@ -316,7 +316,7 @@ Add entry:
 # Start Bitcoin Core on boot
 @reboot bitcoind -conf=/blockchain/.bitcoin/bitcoin.conf -pid=/blockchain/.bitcoin/bitcoind.pid  -datadir=/blockchain/.bitcoin/data
 ```
-
+2021-02-26T20:33:20Z start IBD
 Create an easy link to the debug log of Bitcoin Core:
 
 ```shell
