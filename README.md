@@ -294,6 +294,8 @@ proxy=127.0.0.1:9050
 
 Start Bitcoin Core:
 
+satoshi@rock64:~/bitcoin$ wget -O /etc/systemd/system/bitcoind.service https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/init/bitcoind.service
+
 ```shell
 bitcoind
 ```
