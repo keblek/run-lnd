@@ -207,8 +207,7 @@ assumevalid=
 # Run as a daemon mode without an interactive shell
 daemon=1
 
-# Set the data directory to the storage directory
-datadir=/blockchain/.bitcoin/data
+
 
 # Set the number of megabytes of RAM to use, set to like 50% of available memory
 dbcache=3000
@@ -295,7 +294,8 @@ proxy=127.0.0.1:9050
 Start Bitcoin Core:
 
 satoshi@rock64:~/bitcoin$ wget -O /etc/systemd/system/bitcoind.service https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/init/bitcoind.service
-
+# Set the data directory to the storage directory
+datadir=/blockchain/.bitcoin/data
 sudo systemctl enable bitcoind
 
 ```shell
