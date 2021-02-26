@@ -68,6 +68,8 @@ Setup a local firewall:
 ```shell
 # check if ufw is installed or not
 which ufw
+sudo apt-get install --reinstall linux-modules-5.4.0-42-generic # needed on Rock64
+
 sudo apt install ufw
 sudo ufw logging on
 sudo ufw enable
