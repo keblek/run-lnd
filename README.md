@@ -387,6 +387,7 @@ PATH="$HOME/bin:$GOPATH/bin:$HOME/.local/bin:/usr/local/go/bin:$PATH"
 
 # Add an alias if running on Testnet
 alias lncli="lncli --network=testnet"
+alias btcli="bitcoin-cli -testnet -rpcuser=bitcoinrpc -rpcpassword=0NuI...MFho="
 
 # Save and exit, then run profile
 . ~/.profile
