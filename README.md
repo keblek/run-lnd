@@ -314,7 +314,7 @@ Add entry:
 
 ```
 # Start Bitcoin Core on boot
-@reboot bitcoind
+@reboot bitcoind -conf=/blockchain/.bitcoin/bitcoin.conf -pid=/blockchain/.bitcoin/bitcoind.pid  -datadir=/blockchain/.bitcoin/data
 ```
 
 Create an easy link to the debug log of Bitcoin Core:
@@ -387,7 +387,6 @@ PATH="$HOME/bin:$GOPATH/bin:$HOME/.local/bin:/usr/local/go/bin:$PATH"
 
 # Add an alias if running on Testnet
 alias lncli="lncli --network=testnet"
-alias btcli="bitcoin-cli -testnet -rpcuser=bitcoinrpc -rpcpassword=0NuI...MFho="
 
 # Save and exit, then run profile
 . ~/.profile
