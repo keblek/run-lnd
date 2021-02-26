@@ -294,9 +294,11 @@ proxy=127.0.0.1:9050
 Start Bitcoin Core:
 
 satoshi@rock64:~/bitcoin$ wget -O /etc/systemd/system/bitcoind.service https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/init/bitcoind.service
-# Set the data directory to the storage directory
 datadir=/blockchain/.bitcoin/data
 sudo systemctl enable bitcoind
+https://bitcoin.stackexchange.com/questions/64189/when-running-bitcoind-i-keep-getting-boostfilesystemspace-operation-not-p
+
+# Set the data directory to the storage directory
 
 ```shell
 bitcoind
