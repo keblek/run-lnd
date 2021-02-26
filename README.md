@@ -360,7 +360,9 @@ sudo rm -rf /usr/local/go
 # If installing Go for the first time
 sudo apt-get update && sudo apt-get -y upgrade
 
-# Download Go
+# Download Go for your platform
+wget https://golang.org/dl/go1.15.7.linux-arm64.tar.gz
+or 
 wget https://golang.org/dl/go1.15.7.linux-amd64.tar.gz
 
 # Extract it
