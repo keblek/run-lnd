@@ -1,92 +1,47 @@
 # Run LND
 
-Notes on setting up and running [LND] instances.
+Notes on setting up and running [LND] backed by Bitcoin Core on a SBC or a mini PC running Ubuntu
 
-Example commands are given from the perspective of running Ubuntu
+https://medium.com/@meeDamian/bitcoin-full-node-on-rbp3-revised-88bb7c8ef1d1
+
+
 
 ## System Requirements
 
-- EC2: T3 Micro Instance or better
-- IP: A clear-net routing node should get a fairly static IP
-- OS: Ubuntu is pretty common, any OS
+- CPU: Quad-core or higher 
+- RAM: 4GB or higher
 - PORT: 9735 will be the standard P2P port, 10009 the standard gRPC port
-- DISK: 25 GB+ (on AWS select the io2 storage and at least 200 IOPs)
+- DISK: SSD is highly reccomended
 
-- *Note: EC2 will only give you 5 IPs per region*
-- *Note: When creating an EC2 instance you'll have to add rules to it's security group that allow access to ports 9735 and 10009*
 
 ### Disk:
+
+Using an SD card is NOT reccomended
 
 If using Bitcoin Core on mainnet, setup a disk that can host the entire 
 Blockchain and transaction index: 500 GB.
 
-If using Neutrino lite-mode a separate disk is not necessary.
 
-## Initial Setup
 
-If on EC2:
-
-```shell
-# adjust privs on PEM file
-sudo chmod 600 ~/PATH_TO_PEM_FILE 
-```
-
-Add an Elastic IP and associate it with the node
-
-Connect:
-
-```
-ssh -i ~/path_to_downloaded_pem_file ubuntu@IP_OF_INSTANCE
-```
-
-Install your favorite editor, like emacs:
-
-```shell
-sudo apt update && sudo apt upgrade -y && sudo apt install -y emacs
-
-# open and then quit
-emacs
-
-# change owner of emacs config
-sudo chown -R ubuntu ~/.emacs.d
-```
-
-If running on a public instance, increase the file descriptors limit:
-
-```shell
-sudo emacs /etc/sysctl.conf
-```
-
-Add line:
-
-```
-fs.file-max=512000
-```
-
-```shell
-# Save and reboot
-sudo reboot
-```
-
-If using an attached disk for the full Blockchain and it has not yet been initialized set it up as 
-something like `/blockchain`
+If using an attached disk for the full Blockchain set it up as something like `/blockchain`
 
 ```shell
 
 # List storage
 lsblk
-# You will get the volume name appearing as something like nvme1n1
+# you should see an entry that matches the device you are using based on the storage size
 
 # Check on the storage to make sure it is empty
-sudo file -s /dev/nvme1n1
-# should show "/dev/nvme1n1: data" meaning empty
+sudo file -s /dev/sda
+# should show "/dev/sda: data" meaning empty
 
-# Format the storage as ext4. It may take a second
-sudo mkfs -t ext4 /dev/nvme1n1
+# Format the storage as ext4. 
+# This command wipes the drive
+sudo mkfs -t ext4 /dev/sda
 
 # Make a directory for the volume and mount it
 sudo mkdir /blockchain
-sudo mount /dev/nvme1n1 /blockchain/
+sudo mount /dev/sda /blockchain/
 cd /blockchain
 
 # Double check you have enough space
@@ -95,10 +50,10 @@ df -h .
 
 # Automatically mount the partition, but first backup the existing config
 sudo cp /etc/fstab /etc/fstab.bak
-sudo emacs /etc/fstab
+sudo vim /etc/fstab
 
 # Create entry in the file:
-/dev/nvme1n1 /blockchain ext4 defaults,nofail 0 0
+\\ /dev/sda /blockchain ext4 defaults,nofail 0 0
 
 # Save and exit, then test:
 sudo mount -a
@@ -111,6 +66,9 @@ sudo chown `whoami` /blockchain
 Setup a local firewall:
 
 ```shell
+# check if ufw is installed or not
+which ufw
+sudo apt install ufw
 sudo ufw logging on
 sudo ufw enable
 # PRESS Y
@@ -152,10 +110,10 @@ Instructions:
 sudo apt-get update && sudo apt install -y apt-transport-https
 
 # Edit package sources for installation
-sudo emacs /etc/apt/sources.list.d/tor.list
+sudo vim /etc/apt/sources.list.d/tor.list
 
-deb https://deb.torproject.org/torproject.org focal main
-deb-src https://deb.torproject.org/torproject.org focal main
+\\ deb https://deb.torproject.org/torproject.org focal main
+\\ deb-src https://deb.torproject.org/torproject.org focal main
 
 # Get the GPG key for Tor and add it to GPG
 sudo curl https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | sudo gpg --import
